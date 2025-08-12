@@ -1,3 +1,6 @@
+def log_message(*args, **kwargs):
+    with open('logs.txt', 'a', encoding='utf-8') as f:
+        print(*args, **kwargs, file=f)
 import os
 import random
 import tkinter as tk
@@ -18,14 +21,14 @@ RARITY_WEIGHTS = {
 
 RARITY_CATEGORIES = [rarity.name for rarity in rarities.values()]
 RARITY_CATEGORIES_GUI = RARITY_CATEGORIES + ['Расходник']
-print(f"Доступные редкости: {RARITY_CATEGORIES_GUI}")
+log_message(f"Доступные редкости: {RARITY_CATEGORIES_GUI}")
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 #Ищем подходящие предметы
 def scan_files(json_filename, selected_rarities):
     matched_items = {}
-    print(f"Инициализация словаря предметов: {matched_items}")
+    log_message(f"Инициализация словаря предметов: {matched_items}")
 
     items_json_path = os.path.join(os.path.dirname(__file__), 'items.json')
     with open(items_json_path, 'r', encoding='utf-8') as f:
@@ -44,7 +47,7 @@ def scan_files(json_filename, selected_rarities):
                 if 'Расходник' in selected_rarities:
                     matched_items[item_name] = 'Расходник'
 
-    print(f"Найденные предметы: {matched_items}")
+    log_message(f"Найденные предметы: {matched_items}")
     return matched_items
 
 def select_random_items(matched_files, total_count):
@@ -126,7 +129,7 @@ def run_randomizer():
     # Получение выбранных редкостей
     selected_rarities = [rarity for rarity, var in rarity_vars.items() if var.get()]
   
-    print(f"Выбранные редкости: {selected_rarities}")
+    log_message(f"Выбранные редкости: {selected_rarities}")
 
     if not selected_rarities:
         messagebox.showwarning("Ошибка", "Выберите хотя бы одну редкость!")
@@ -138,7 +141,7 @@ def run_randomizer():
     #filtered_files = {rarity: matched_files[rarity] for rarity in selected_rarities}
 
     selected_items = select_random_items(matched_files, total_count)
-    print(f"Выбранные предметы: {selected_items}")
+    log_message(f"Выбранные предметы: {selected_items}")
 
     if not selected_items:
         messagebox.showinfo("Нет результатов", "Не найдено подходящих файлов для выбранных редкостей.")
