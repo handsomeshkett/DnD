@@ -1,20 +1,21 @@
 
 
+def log_message(*args, **kwargs):
+    with open('logs.txt', 'a', encoding='utf-8') as f:
+        print(*args, **kwargs, file=f)
+
 ##Функции для рандомизации прелметов
 
-def randomize_item():
-    total_count = simpledialog.askinteger("Сколько предметов?", "Введите количество предметов:", minvalue=1)
-    if not total_count:
-        return
+def randomize_items(selected_rarities, total_count):
+    pass
 
-    # Получение выбранных редкостей
-    selected_rarities = [rarity for rarity, var in rarity_vars.items() if var.get()]
-  
-    log_message(f"Выбранные редкости: {selected_rarities}")
+    ## Получаем словарь предметов с учетом выбранных редкостей
 
-    if not selected_rarities:
-        messagebox.showwarning("Ошибка", "Выберите хотя бы одну редкость!")
-        return
+    ## Создаем взвешенный пул предметов с учетом веса редкостей
+
+    ## Выбираем случайные предметы из пула
+
+    ## Возвращаем список выбранных предметов
 
     #!!!!! Получаем словарь файлов с учетом выбранных редкостей
     matched_files = scan_files("items.json", selected_rarities)
@@ -38,4 +39,3 @@ def randomize_item():
         tk.Label(frame, text=f"{rarity} → {name}").pack(side='left', anchor='w')
         tk.Button(frame, text="📋", command=lambda n=name: show_info(n)).pack(side='right')
 
-def get_rarities():

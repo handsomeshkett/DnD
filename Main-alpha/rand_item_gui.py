@@ -157,25 +157,26 @@ def run_randomizer():
         tk.Label(frame, text=f"{rarity} → {name}").pack(side='left', anchor='w')
         tk.Button(frame, text="📋", command=lambda n=name: show_info(n)).pack(side='right')
 
-
-# GUI
-root = tk.Tk()
-root.title("Рандомизатор предметов для D&D")
-root.geometry("400x400")
-
-tk.Label(root, text="🎲 Рандомизатор Инвентаря").pack(pady=10)
-
-# Блок выбора редкостей
-rarity_frame = tk.LabelFrame(root, text="Выберите редкости", padx=10, pady=5)
-rarity_frame.pack(pady=5, fill='both', padx=10)
-
-rarity_vars = {}
-for rarity in RARITY_CATEGORIES_GUI:
-    var = tk.BooleanVar(value=True)
-    chk = tk.Checkbutton(rarity_frame, text=rarity, variable=var)
-    chk.pack(anchor='w')
-    rarity_vars[rarity] = var
-
-tk.Button(root, text="Запустить", command=run_randomizer, bg="lightgreen").pack(pady=15)
-
-root.mainloop()
+##
+### GUI
+##root = tk.Tk()
+##root.title("Рандомизатор предметов для D&D")
+##root.geometry("400x400")
+##
+##tk.Label(root, text="🎲 Рандомизатор Инвентаря").pack(pady=10)
+##
+### Блок выбора редкостей
+##rarity_frame = tk.LabelFrame(root, text="Выберите редкости", padx=10, pady=5)
+##rarity_frame.pack(pady=5, fill='both', padx=10)
+##
+##rarity_vars = {}
+##for rarity in RARITY_CATEGORIES_GUI:
+##    var = tk.BooleanVar(value=True)
+##    chk = tk.Checkbutton(rarity_frame, text=rarity, variable=var)
+##    chk.pack(anchor='w')
+##    rarity_vars[rarity] = var
+##
+##tk.Button(root, text="Запустить", command=run_randomizer, bg="lightgreen").pack(pady=15)
+##
+##root.mainloop()
+##
