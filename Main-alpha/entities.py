@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import os
 
 #Значения которые хранит каждая редкость
 @dataclass
@@ -66,3 +67,6 @@ rarities = {
 rarity_weights = {key: value.weight for key, value in rarities.items()}
 rarity_names = {key: value.name for key, value in rarities.items()}
 rarity_price_ranges = {key: (value.min_price, value.max_price) for key, value in rarities.items()}
+
+json_filepath = os.path.normpath(os.path.join(os.path.dirname(__file__), '..', 'txt_parser', 'items.json'))
+

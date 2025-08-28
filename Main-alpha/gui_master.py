@@ -3,7 +3,7 @@ import sys
 import os
 import tkinter as tk
 from entities import rarities, rarity_weights, rarity_names, rarity_price_ranges
-from core import randomize_items
+from core import randomize_items, get_item_description
 
 class DnDApp:
     def __init__(self, root):
@@ -83,10 +83,55 @@ class DnDApp:
             if vars.get():           
                 selected_rarities.append(rarity)
         count = self.item_count_var.get()
+
+        print(selected_rarities, count)
         
         items = randomize_items(selected_rarities, count)
 
+        label = tk.Label(self.main_frame, text="Результаты рандомизации:", font=("Arial", 16))
+        label.pack(pady=20)
+
+        for name, rarity in items:
+            item_frame = tk.Frame(self.main_frame, bd=1, relief=tk.SOLID)
+            item_frame.pack(ipadx=10, ipady=10, padx=20, pady=20)
+
+            item_label = tk.Label(item_frame, text=f"{name}: {rarity}", font=("Arial", 14))
+            item_label.pack(side=tk.LEFT)
+
+            description_button = tk.Button(item_frame, text="Описание", command=lambda name=name: self.show_description(name))
+            description_button.pack(side=tk.LEFT, padx=5)
+
+            send_message_button = tk.Button(item_frame, text="💬", command=lambda name=name: self.send_message(name))
+            send_message_button.pack(side=tk.LEFT, padx=5)
         
+    def show_description(self, name):
+        # Скрыть текущий фрейм
+        self.main_frame.pack_forget()
+
+        # Создать фрейм с описанием
+        description_frame = tk.Frame(self.root)
+        description_frame.pack()
+
+        item_description = get_item_description(name)
+
+        # Добавить текст с описанием
+        description_text = tk.Label(description_frame, text=f"{item_description}", font=("Arial", 12))
+        description_text.pack()
+
+        # Добавить кнопку "Назад"
+        back_button = tk.Button(description_frame, text="Назад", command=self.back_to_current_frame)
+        back_button.pack()
+
+        self.root.bind("<Escape>", self.back_to_current_frame)
+
+    def back_to_current_frame(self, event=None):
+        # Скрыть фрейм с описанием
+        for widget in self.root.winfo_children():
+            if isinstance(widget, tk.Frame):
+                widget.pack_forget()
+
+        # Покажить снова текущий фрейм
+        self.main_frame.pack(fill='both', expand=True)
 
     def generate_price(self):
         self.clear_frame()
